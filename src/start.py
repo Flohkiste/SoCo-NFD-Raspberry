@@ -4,14 +4,6 @@ from soco import SoCo
 from soco.plugins.sharelink import *
 import time
 
-WohnzimmerSub = SoCo("192.168.150.34")
-WohnzimmerArc = SoCo("192.168.150.28")
-WohnzimmerR = SoCo("192.168.150.35")
-WohnzimmerL = SoCo("192.168.150.29")
-KücheR = SoCo("192.168.150.30")
-KücheL = SoCo("192.168.150.36")
-Klavier = SoCo("192.168.150.39")
-
 Wohnzimmer = [
     SoCo("192.168.150.34"),
     SoCo("192.168.150.28"),
