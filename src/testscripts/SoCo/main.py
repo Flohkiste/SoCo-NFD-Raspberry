@@ -3,7 +3,7 @@ from soco import SoCo
 from soco.plugins.sharelink import *
 
 
-room2ip = "192.168.150.29"
+room2ip = "192.168.150.30"
 
 room = SoCo("192.168.150.38")
 room.clear_queue()
