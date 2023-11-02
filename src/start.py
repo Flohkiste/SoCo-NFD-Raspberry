@@ -4,59 +4,52 @@ from soco import SoCo
 from soco.plugins.sharelink import *
 import time
 
-Wohnzimmer = [
-    SoCo("192.168.150.34"),
-    SoCo("192.168.150.28"),
-    SoCo("192.168.150.35"),
-    SoCo("192.168.150.29"),
-]
-Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.36"), SoCo("192.168.150.39")]
+Wohnzimmer = SoCo("192.168.150.28")
+Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
+
+grouped = False
 
 
 def joinGroups():
-    for x in Wohnzimmer:
-        x += 1
-        if x == 4:
-            break
+    Küche[1].join(Küche[0])
 
-        Wohnzimmer[x].join(Wohnzimmer[0])
 
-    for x in Küche:
-        x += 1
-        if x == 3:
-            break
-
-        Küche[x].join(Küche[0])
+def joinGroup():
+    resetGroups()
+    Wohnzimmer.join(Küche[0])
+    Küche[1].join(Küche[0])
 
 
 def resetGroups():
-    for x in Wohnzimmer:
-        x += 1
-        if x == 4:
-            break
-
-        Wohnzimmer[x].unjoin()
-
-    for x in Küche:
-        x += 1
-        if x == 3:
-            break
-
-        Küche[x].unjoin()
-
+    Wohnzimmer.unjoin()
+    Küche[0].unjoin()
+    Küche[1].unjoin()
     joinGroups()
+
+
+def clearQueue():
+    for x in Küche:
+        Küche[x].clear_queue()
+
+    if grouped:
+        Wohnzimmer.clear_queue()
 
 
 def valueVolumeChanged(value, direction):
     print("Volume: {}, Direction: {}".format(value, direction))
 
 
-def valuePlayChanged(value, direction):
+def playButtonPressed(value, direction):
     print("Play: {}, Direction: {}".format(value, direction))
 
 
 def groupingButtonPressed():
-    print("Grouping button pressed")
+    if grouped:
+        resetGroups
+        grouped = False
+    else:
+        joinGroup
+        grouped = True
 
 
 def shuffleButtonPressed():
@@ -66,7 +59,7 @@ def shuffleButtonPressed():
 GPIO.setmode(GPIO.BCM)
 
 volumeEncoder = Encoder(26, 17, valueVolumeChanged)
-# playEncoder = 0
+# playButtonPin = 0
 shuffleButtonPin = 16
 # groupingButtonPin = 0
 
@@ -74,6 +67,12 @@ GPIO.setup(shuffleButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(
     shuffleButtonPin, GPIO.FALLING, callback=shuffleButtonPressed, bouncetime=300
 )
+# GPIO.add_event_detect(
+#    playButtonPin, GPIO.FALLING, callback=playButtonPressed, bouncetime=300
+# )
+
+
+joinGroups()
 
 try:
     while True:
