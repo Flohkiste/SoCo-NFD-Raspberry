@@ -132,5 +132,6 @@ try:
     while True:
         time.sleep(5)
         print("Running")
+        checkForChange()
 except KeyboardInterrupt:
     GPIO.cleanup()
