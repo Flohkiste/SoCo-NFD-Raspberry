@@ -102,7 +102,7 @@ def updateScan():
 
 def checkForChange():
     updateScan()
-    if currentScan == lastlastScan:
+    if (currentScan == lastlastScan) & (currentScan != lastScan):
         print("Wird gescannt!")
 
 
@@ -130,8 +130,6 @@ joinGroups()
 
 try:
     while True:
-        time.sleep(5)
-        print("Running")
         checkForChange()
 except KeyboardInterrupt:
     GPIO.cleanup()
