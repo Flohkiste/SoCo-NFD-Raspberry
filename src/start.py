@@ -97,15 +97,19 @@ def updateScan():
     time.sleep(0.01)
     lastScan = currentScan
     time.sleep(0.01)
-    currentScan = scanner.read_no_block()[1]
+    currentScan = scanner.read_no_block()[0]
 
 
 def checkForScan():
     updateScan()
-    if (currentScan == lastlastScan) & (currentScan != lastScan):
-        return True
+    if (
+        (currentScan == lastlastScan)
+        & (currentScan != lastScan)
+        & (currentScan != None)
+    ):
+        print("neuer scan")
     else:
-        return False
+        print(" ")
 
 
 def checkForChange():
@@ -142,6 +146,6 @@ joinGroups()
 
 try:
     while True:
-        checkForChange()
+        checkForScan()
 except KeyboardInterrupt:
     GPIO.cleanup()
