@@ -97,7 +97,7 @@ def updateScan():
     time.sleep(0.01)
     lastScan = currentScan
     time.sleep(0.01)
-    currentScan = scanner.read_no_block[1]
+    currentScan = scanner.read_no_block()[1]
 
 
 def checkForChange():
