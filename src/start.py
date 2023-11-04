@@ -109,11 +109,11 @@ def checkForScan1():
 
 
 def checkForScan():
-    Scan1 = checkForScan1()
-    Scan2 = checkForScan1()
-    Scan3 = checkForScan1()
-    if Scan1 == Scan3 & Scan1 != False:
+    global lastScan
+    updateScan()
+    if currentScan != lastScan:
         print("Scan")
+        lastScan = currentScan
     else:
         print(" ")
 
