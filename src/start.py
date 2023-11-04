@@ -108,6 +108,8 @@ def checkForScan():
             y += 1
     if y == 2:
         print("Scan")
+    else:
+        print(" ")
 
 
 GPIO.setmode(GPIO.BCM)
