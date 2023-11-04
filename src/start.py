@@ -8,6 +8,7 @@ from mfrc522 import SimpleMFRC522
 
 Wohnzimmer = SoCo("192.168.150.28")
 Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
+Playlists = ['https://open.spotify.com/playlist/4aRqsGxLhQcdsypFQ8O0f3?si=25a8e442ec4a42d6']
 
 grouped = False
 
@@ -97,7 +98,7 @@ def updateScan():
     time.sleep(0.001)
     lastScans[1] = lastScans[0]
     time.sleep(0.001)
-    lastScans[0] = scanner.read_no_block()[0]
+    lastScans[0] = scanner.read_no_block()
 
 
 def checkForScan():
@@ -110,6 +111,10 @@ def checkForScan():
         print("Scan")
     else:
         print(" ")
+
+
+def playlistFromId():
+
 
 
 GPIO.setmode(GPIO.BCM)
