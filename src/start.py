@@ -89,42 +89,18 @@ def shuffleButtonPressed(channel):
         Küche[0].play_mode = "SHUFFLE"
 
 
-def updateScan():
-    global currentScan
-    global lastScan
-    global lastlastScan
+def isNewRFIDScan():
+    global currentScan, lastScan, lastlastScan
     lastlastScan = lastScan
-    time.sleep(0.001)
     lastScan = currentScan
-    time.sleep(0.001)
-    currentScan = scanner.read_no_block()[0]
-
-
-def checkForScan1():
-    updateScan()
-    if (currentScan == lastlastScan) & (currentScan != lastScan):
-        return True
-    else:
-        return False
-
-
-def checkForScan():
-    global lastScan
-    updateScan()
-    if currentScan != lastScan:
-        print("Scan")
-        lastScan = currentScan
-    else:
-        print(" ")
-
-
-def checkForChange():
-    lastScan1 = checkForScan()
-    currentScan1 = checkForScan()
-    if currentScan1 != lastScan1:
-        print("change")
-    else:
-        print(" ")
+    try:
+        id, text = scanner.read()
+        currentScan = id
+        if currentScan != lastScan and currentScan != lastlastScan:
+            return True
+    except:
+        pass
+    return False
 
 
 GPIO.setmode(GPIO.BCM)
