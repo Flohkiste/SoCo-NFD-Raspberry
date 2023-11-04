@@ -104,7 +104,7 @@ def checkForScan():
     y = 0
     updateScan()
     for x in lastScans:
-        if lastScans[x] != None:
+        if lastScans[x][0] != None:
             y += 1
     if y == 2:
         print("Scan")
