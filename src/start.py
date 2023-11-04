@@ -101,7 +101,7 @@ def updateScan():
     time.sleep(0.001)
     lastScans[1] = lastScans[0]
     time.sleep(0.001)
-    lastScans[0] = scanner.read_no_block()
+    lastScans[0] = scanner.read_no_block()[0]
 
 
 def checkForScan():
@@ -117,6 +117,7 @@ def checkForScan():
 
 
 def playlistFromId(id):
+    global currentPlaylist
     Küche[0].clear_queue()
     currentPlaylist = id
     ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[id])
