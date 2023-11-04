@@ -100,13 +100,22 @@ def updateScan():
     currentScan = scanner.read_no_block()[0]
 
 
-def checkForScan():
+def checkForScan1():
     updateScan()
     if (currentScan == lastlastScan) & (currentScan != lastScan):
-        print("Scan")
         return True
     else:
         return False
+
+
+def checkForScan():
+    Scan1 = checkForScan1()
+    Scan2 = checkForScan1()
+    Scan3 = checkForScan1()
+    if Scan1 == Scan3 & Scan1 != False:
+        print("Scan")
+    else:
+        print(" ")
 
 
 def checkForChange():
