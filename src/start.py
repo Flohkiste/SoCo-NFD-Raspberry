@@ -94,9 +94,9 @@ def updateScan():
     global lastScan
     global lastlastScan
     lastlastScan = lastScan
-    time.sleep(0.01)
+    time.sleep(0.001)
     lastScan = currentScan
-    time.sleep(0.01)
+    time.sleep(0.001)
     currentScan = scanner.read_no_block()[0]
 
 
@@ -110,7 +110,7 @@ def checkForScan():
 
 def checkForChange():
     lastScan1 = checkForScan()
-    time.sleep(0.01)
+    time.sleep(0.001)
     currentScan1 = checkForScan()
     if (currentScan1 != False) & (currentScan1 != lastScan1):
         print("neuer scan")
