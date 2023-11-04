@@ -8,8 +8,11 @@ from mfrc522 import SimpleMFRC522
 
 Wohnzimmer = SoCo("192.168.150.28")
 Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
-Playlists = ['https://open.spotify.com/playlist/4aRqsGxLhQcdsypFQ8O0f3?si=25a8e442ec4a42d6']
-
+Playlists = [
+    "https://open.spotify.com/playlist/4aRqsGxLhQcdsypFQ8O0f3?si=25a8e442ec4a42d6"
+]
+myShare = ShareLinkPlugin(Küche[0])
+currentPlaylist = None
 grouped = False
 
 
@@ -113,8 +116,10 @@ def checkForScan():
         print(" ")
 
 
-def playlistFromId():
-
+def playlistFromId(id):
+    Küche[0].clear_queue()
+    currentPlaylist = id
+    ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[id])
 
 
 GPIO.setmode(GPIO.BCM)
