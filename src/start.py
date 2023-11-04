@@ -103,6 +103,7 @@ def updateScan():
 def checkForScan():
     updateScan()
     if (currentScan == lastlastScan) & (currentScan != lastScan):
+        print("Scan")
         return True
     else:
         return False
