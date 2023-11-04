@@ -109,10 +109,10 @@ def checkForScan():
 
 
 def checkForChange():
-    lastScan = checkForScan()
+    lastScan1 = checkForScan()
     time.sleep(0.01)
-    currentScan = checkForScan()
-    if (currentScan != None) & (currentScan != lastScan):
+    currentScan1 = checkForScan()
+    if (currentScan1 != False) & (currentScan1 != lastScan1):
         print("neuer scan")
     else:
         print(" ")
