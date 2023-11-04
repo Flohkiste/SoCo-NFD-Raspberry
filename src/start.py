@@ -14,6 +14,7 @@ Playlists = [
 myShare = ShareLinkPlugin(Küche[0])
 currentPlaylist = None
 grouped = False
+iplay = False
 
 
 def updateObjects():
@@ -110,8 +111,17 @@ def checkForScan():
     for x in range(len(lastScans)):
         if lastScans[x] != None:
             y += 1
-    if y == 2:
-        print("Scan")
+    if y == 2 & currentPlaylist != lastScans[0]:
+        print("play")
+        iplay = True
+    elif (
+        y
+        > 2 & iplay
+        == True & Küche[0].get_current_transport_info()["current_transport_state"]
+        == "PLAYING"
+    ):
+        print("Stop")
+        iplay = False
     else:
         print(" ")
 
