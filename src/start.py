@@ -104,6 +104,8 @@ def checkForChange():
     updateScan()
     if (currentScan == lastlastScan) & (currentScan != lastScan):
         print("Wird gescannt!")
+    else:
+        print(" ")
 
 
 GPIO.setmode(GPIO.BCM)
