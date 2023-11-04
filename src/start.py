@@ -101,6 +101,7 @@ def updateScan():
 
 
 def checkForScan():
+    updateScan()
     print(currentScan)
 
 
