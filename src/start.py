@@ -127,6 +127,9 @@ joinGroups()
 
 try:
     while True:
-        checkForChange()
+        if isNewRFIDScan:
+            print("Scan")
+        else:
+            print(" ")
 except KeyboardInterrupt:
     GPIO.cleanup()
