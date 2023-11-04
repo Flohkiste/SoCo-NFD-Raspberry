@@ -103,7 +103,7 @@ def updateScan():
 def checkForScan():
     y = 0
     updateScan()
-    for x in lastScans:
+    for x in range(len(lastScans)):
         if lastScans[x] != None:
             y += 1
     if y == 2:
