@@ -3,6 +3,8 @@ import RPi.GPIO as GPIO
 from soco import SoCo
 from soco.plugins.sharelink import *
 import time
+from mfrc522 import SimpleMFRC522
+
 
 Wohnzimmer = SoCo("192.168.150.28")
 Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
@@ -87,12 +89,33 @@ def shuffleButtonPressed(channel):
         Küche[0].play_mode = "SHUFFLE"
 
 
+def updateScan():
+    global currentScan
+    global lastScan
+    global lastlastScan
+    lastlastScan = lastScan
+    time.sleep(0.01)
+    lastScan = currentScan
+    time.sleep(0.01)
+    currentScan = scanner.read_no_block[1]
+
+
+def checkForChange():
+    updateScan()
+    if currentScan == lastlastScan:
+        print("Wird gescannt!")
+
+
 GPIO.setmode(GPIO.BCM)
 
 volumeEncoder = Encoder(26, 17, valueVolumeChanged)
 # playButtonPin = 27
 groupingButtonPin = 16
 # shuffleButtonPin = 0
+scanner = SimpleMFRC522()
+currentScan = None
+lastScan = None
+lastlastScan = None
 
 GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(
