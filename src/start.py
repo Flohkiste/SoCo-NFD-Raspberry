@@ -111,7 +111,16 @@ def checkForScan():
         & (currentScan != lastScan)
         & (currentScan == lastlastScan)
     ):
-        print(currentScan)
+        return True
+    else:
+        return False
+
+
+def checkForChange():
+    currentScan = checkForScan()
+    lastScan = checkForScan()
+    if currentScan == True & currentScan != lastScan:
+        print("neuerScan")
 
 
 GPIO.setmode(GPIO.BCM)
