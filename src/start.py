@@ -90,37 +90,24 @@ def shuffleButtonPressed(channel):
 
 
 def updateScan():
-    global currentScan
-    global lastScan
-    global lastlastScan
-    lastlastScan = lastScan
+    global lastScans
+    lastScans[3] = lastScans[2]
     time.sleep(0.001)
-    lastScan = currentScan
+    lastScans[2] = lastScans[1]
     time.sleep(0.001)
-    currentScan = scanner.read_no_block()[0]
+    lastScans[1] = lastScans[0]
+    time.sleep(0.001)
+    lastScans[0] = scanner.read_no_block()
 
 
 def checkForScan():
+    y = 0
     updateScan()
-    if (
-        (currentScan != None)
-        & (currentScan != lastScan)
-        & (currentScan == lastlastScan)
-    ) | (
-        (currentScan == None)
-        & (currentScan != lastScan)
-        & (currentScan == lastlastScan)
-    ):
-        return True
-    else:
-        return False
-
-
-def checkForChange():
-    currentScan = checkForScan()
-    lastScan = checkForScan()
-    if currentScan == True & currentScan != lastScan:
-        print("neuerScan")
+    for x in lastScans:
+        if lastScans[x] != None:
+            y += 1
+    if y == 2:
+        print("Scan")
 
 
 GPIO.setmode(GPIO.BCM)
@@ -130,9 +117,7 @@ volumeEncoder = Encoder(26, 17, valueVolumeChanged)
 groupingButtonPin = 16
 # shuffleButtonPin = 0
 scanner = SimpleMFRC522()
-currentScan = None
-lastScan = None
-lastlastScan = None
+lastScans = [None, None, None, None]
 
 GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(
@@ -147,6 +132,6 @@ joinGroups()
 
 try:
     while True:
-        checkForChange()
+        checkForScan()
 except KeyboardInterrupt:
     GPIO.cleanup()
