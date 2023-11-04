@@ -100,12 +100,20 @@ def updateScan():
     currentScan = scanner.read_no_block()[1]
 
 
-def checkForChange():
+def checkForScan():
     updateScan()
     if (currentScan == lastlastScan) & (currentScan != lastScan):
-        print("Wird gescannt!")
+        return True
     else:
-        print(" ")
+        return False
+
+
+def checkForChange():
+    lastScan = checkForScan()
+    time.sleep(0.01)
+    currentScan = checkForScan()
+    if (currentScan != None) & (currentScan != lastScan):
+        print("neuer scan")
 
 
 GPIO.setmode(GPIO.BCM)
@@ -132,6 +140,6 @@ joinGroups()
 
 try:
     while True:
-        checkForChange()
+        checkForScan()
 except KeyboardInterrupt:
     GPIO.cleanup()
