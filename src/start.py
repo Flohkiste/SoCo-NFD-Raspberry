@@ -106,6 +106,10 @@ def checkForScan():
         (currentScan != None)
         & (currentScan != lastScan)
         & (currentScan == lastlastScan)
+    ) | (
+        (currentScan == None)
+        & (currentScan != lastScan)
+        & (currentScan == lastlastScan)
     ):
         print(currentScan)
 
