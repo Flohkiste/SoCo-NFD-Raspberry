@@ -128,6 +128,6 @@ joinGroups()
 
 try:
     while True:
-        checkForChange()
+        checkForScan()
 except KeyboardInterrupt:
     GPIO.cleanup()
