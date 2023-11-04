@@ -100,31 +100,8 @@ def updateScan():
     currentScan = scanner.read_no_block()[0]
 
 
-def checkForScan1():
-    updateScan()
-    if (currentScan == lastlastScan) & (currentScan != lastScan):
-        return True
-    else:
-        return False
-
-
 def checkForScan():
-    global lastScan
-    updateScan()
-    if currentScan != lastScan:
-        print("Scan")
-        lastScan = currentScan
-    else:
-        print(" ")
-
-
-def checkForChange():
-    lastScan1 = checkForScan()
-    currentScan1 = checkForScan()
-    if currentScan1 != lastScan1:
-        print("change")
-    else:
-        print(" ")
+    print(currentScan)
 
 
 GPIO.setmode(GPIO.BCM)
