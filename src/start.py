@@ -1,3 +1,4 @@
+import pathlib
 from encoder import Encoder
 import RPi.GPIO as GPIO
 from soco import SoCo
@@ -30,6 +31,7 @@ def setupPlaylists():
 
 
 def updateObjects():
+    global Wohnzimmer, Küche
     Wohnzimmer = SoCo("192.168.150.28")
     Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
 
