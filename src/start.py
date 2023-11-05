@@ -8,13 +8,25 @@ from mfrc522 import SimpleMFRC522
 
 Wohnzimmer = SoCo("192.168.150.28")
 Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
-Playlists = [
-    "https://open.spotify.com/playlist/4aRqsGxLhQcdsypFQ8O0f3?si=25a8e442ec4a42d6"
-]
+Playlists = []
 myShare = ShareLinkPlugin(Küche[0])
 currentPlaylist = None
 grouped = False
 iplay = False
+
+
+def setupPlaylists():
+    print("Opening file...")
+    filepath = str(pathlib.Path(__file__).parent.resolve()) + "\playlists.txt"
+    playlistFile = open(filepath, "w")
+    print("Reading lines...")
+    line_list = playlistFile.readlines()
+    print(f"Read {len(line_list)} lines.")
+
+    for line in line_list:
+        Playlists.append(line.strip())
+
+    playlistFile.close()
 
 
 def updateObjects():
