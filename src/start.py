@@ -132,9 +132,10 @@ def checkForScan():
         for x in range(len(lastScans)):
             if lastScans[x] != None:
                 currentPlaylist = int(lastScans[x])
-                print(currentPlaylist)
-                print(lastScans[1])
-                if lastScans[currentPlaylist] is not None:
+                if (
+                    currentPlaylist < len(lastScans)
+                    and lastScans[currentPlaylist] is not None
+                ):
                     playlistFromId(int(lastScans[currentPlaylist]))
                 break
         print(currentPlaylist)
@@ -142,10 +143,10 @@ def checkForScan():
     elif (
         (y < 2)
         & (iplay == True)
-        #        & (
-        #            Küche[0].get_current_transport_info()["current_transport_state"]
-        #            == "PLAYING"
-        #        )
+        & (
+            Küche[0].get_current_transport_info()["current_transport_state"]
+            == "PLAYING"
+        )
     ):
         print("Stop")
         Küche[0].pause()
