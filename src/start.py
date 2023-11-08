@@ -131,9 +131,10 @@ def checkForScan():
         print("play")
         for x in range(len(lastScans)):
             if lastScans[x] != None:
-                playlistFromId(int(lastScans[x]))
+                # playlistFromId(int(lastScans[x]))
                 break
         currentPlaylist = lastScans[0]
+        print(currentPlaylist)
         iplay = True
     elif (
         (y < 2)
