@@ -11,7 +11,7 @@ Wohnzimmer = SoCo("192.168.150.28")
 Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
 Playlists = []
 myShare = ShareLinkPlugin(Küche[0])
-currentPlaylist = None
+currentPlaylist = -1
 grouped = False
 iplay = False
 
@@ -126,7 +126,7 @@ def checkForScan():
     for x in range(len(lastScans)):
         if lastScans[x] != None:
             y += 1
-    if y == 2:
+    if (y == 2) & (currentPlaylist != lastScans[0]):
         print("play")
         iplay = True
     elif (
