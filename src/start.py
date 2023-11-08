@@ -120,6 +120,7 @@ def updateScan():
 
 
 def checkForScan():
+    global iplay
     y = 0
     updateScan()
     for x in range(len(lastScans)):
