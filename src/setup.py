@@ -21,7 +21,8 @@ def setPlaylists():
             break
         else:
             Playlists.append(playlist + "\n")
-            scanner.write(len(Playlists) - 1)
+            x = len(Playlists) - 1
+            scanner.write(x)
 
     playlistFile.writelines(Playlists)
     playlistFile.close()
