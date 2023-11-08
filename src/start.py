@@ -41,9 +41,15 @@ def joinGroups():
 
 
 def joinGroup():
+    if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
+        Küche[0].pause()
+        x = True
+
     resetGroups()
     Wohnzimmer.join(Küche[0])
     Küche[1].join(Küche[0])
+    if x == True:
+        Küche[0].play()
 
 
 def resetGroups():
@@ -56,9 +62,7 @@ def resetGroups():
 def checkIfGrouped():
     global grouped
     updateObjects()
-    # Now check the group members
     group = next(g for g in Küche[0].all_groups if g.coordinator is Küche[0])
-    # Get the number of devices in the group
     num_devices = len(group.members)
     if num_devices <= 3:
         grouped = False
