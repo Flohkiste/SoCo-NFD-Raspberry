@@ -120,7 +120,7 @@ def updateScan():
 
 
 def checkForScan():
-    global iplay
+    global iplay, currentPlaylist
     y = 0
     updateScan()
     for x in range(len(lastScans)):
