@@ -7,7 +7,7 @@ scanner = SimpleMFRC522()
 
 def setPlaylists():
     global Playlists, scanner
-    filepath = str(pathlib.Path(__file__).parent.resolve()) + "\playlists.txt"
+    filepath = str(pathlib.Path(__file__).parent.resolve()) + "/playlists.txt"
     playlistFile = open(filepath, "w")
 
     while True:
