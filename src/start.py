@@ -50,7 +50,7 @@ def joinGroup():
     Wohnzimmer.join(Küche[0])
     Küche[1].join(Küche[0])
     while grouped == False:
-        time.sleep(1)
+        time.sleep(2)
         checkIfGrouped()
 
     if x == True:
