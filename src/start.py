@@ -177,6 +177,7 @@ GPIO.add_event_detect(
 
 
 joinGroups()
+setupPlaylists()
 
 try:
     while True:
