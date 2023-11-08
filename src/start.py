@@ -156,6 +156,7 @@ def playlistFromId(id):
     Küche[0].clear_queue()
     currentPlaylist = id
     ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[id])
+    Küche[0].play()
 
 
 GPIO.setmode(GPIO.BCM)
