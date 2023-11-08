@@ -132,10 +132,10 @@ def checkForScan():
     elif (
         (y > 2)
         & (iplay == True)
-        & (
-            Küche[0].get_current_transport_info()["current_transport_state"]
-            == "PLAYING"
-        )
+        #        & (
+        #            Küche[0].get_current_transport_info()["current_transport_state"]
+        #            == "PLAYING"
+        #        )
     ):
         print("Stop")
         iplay = False
