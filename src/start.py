@@ -18,7 +18,7 @@ iplay = False
 
 def setupPlaylists():
     print("Opening file...")
-    filepath = str(pathlib.Path(__file__).parent.resolve()) + "\playlists.txt"
+    filepath = str(pathlib.Path(__file__).parent.resolve()) + "/playlists.txt"
     playlistFile = open(filepath, "w")
     print("Reading lines...")
     line_list = playlistFile.readlines()
