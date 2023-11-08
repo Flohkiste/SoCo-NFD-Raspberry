@@ -12,10 +12,10 @@ def setPlaylists():
 
     while True:
         print(
-            "Please enter the link to the associated playlist, write Finished to save the playlists:"
+            "Please enter the link to the associated playlist, write S to save the playlists:"
         )
         playlist = input("")
-        if playlist == "Finished":
+        if playlist == "S":
             break
         else:
             print("Please place the RFID chip on the scanner")
