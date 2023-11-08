@@ -128,6 +128,7 @@ def checkForScan():
             y += 1
     if (y == 2) & (currentPlaylist != lastScans[0]):
         print("play")
+        currentPlaylist = lastScans[0]
         iplay = True
     elif (
         (y > 2)
