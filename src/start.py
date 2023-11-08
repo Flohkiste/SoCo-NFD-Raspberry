@@ -146,6 +146,7 @@ def checkForScan():
         #        )
     ):
         print("Stop")
+        Küche[0].pause()
         iplay = False
     else:
         print(" ")
@@ -177,7 +178,7 @@ GPIO.add_event_detect(
 # )
 
 
-joinGroups()
+resetGroups()
 setupPlaylists()
 
 try:
