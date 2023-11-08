@@ -41,6 +41,7 @@ def joinGroups():
 
 
 def joinGroup():
+    x = False
     if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
         Küche[0].pause()
         x = True
