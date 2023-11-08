@@ -49,6 +49,8 @@ def joinGroup():
     resetGroups()
     Wohnzimmer.join(Küche[0])
     Küche[1].join(Küche[0])
+    while grouped == False:
+        checkIfGrouped()
     if x == True:
         Küche[0].play()
 
