@@ -15,11 +15,11 @@ def setPlaylists():
             "Please enter the link to the associated playlist, write Finished to save the playlists:"
         )
         playlist = input("")
-        print("Please place the RFID chip on the scanner")
-        scanner.read()
         if playlist == "Finished":
             break
         else:
+            print("Please place the RFID chip on the scanner")
+            scanner.read()
             Playlists.append(playlist + "\n")
             scanner.write(str(len(Playlists) - 1))
 
