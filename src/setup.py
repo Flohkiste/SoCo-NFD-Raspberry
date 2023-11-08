@@ -6,7 +6,7 @@ scanner = SimpleMFRC522()
 
 
 def setPlaylists():
-    global Playlists
+    global Playlists, scanner
     filepath = str(pathlib.Path(__file__).parent.resolve()) + "\playlists.txt"
     playlistFile = open(filepath, "w")
 
@@ -21,8 +21,7 @@ def setPlaylists():
             break
         else:
             Playlists.append(playlist + "\n")
-            x = len(Playlists) - 1
-            scanner.write(x)
+            scanner.write(str(len(Playlists) - 1))
 
     playlistFile.writelines(Playlists)
     playlistFile.close()
