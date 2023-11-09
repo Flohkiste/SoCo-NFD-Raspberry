@@ -1,4 +1,5 @@
 import pathlib
+from threading import Timer
 from encoder import Encoder
 import RPi.GPIO as GPIO
 from soco import SoCo
@@ -49,6 +50,8 @@ def joinGroup():
     resetGroups()
     Wohnzimmer.join(Küche[0])
     Küche[1].join(Küche[0])
+
+    t = Timer(30.0, Küche[0].play())
 
     if x == True:
         Küche[0].play()
