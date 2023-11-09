@@ -38,6 +38,7 @@ def updateObjects():
 
 
 def joinGroups():
+    print("Join")
     updateObjects()
     Küche[1].join(Küche[0])
 
@@ -59,6 +60,7 @@ def joinGroup():
 
 
 def resetGroups():
+    print("Reset")
     Wohnzimmer.unjoin()
     Küche[0].unjoin()
     Küche[1].unjoin()
@@ -103,7 +105,9 @@ def playButtonPressed(channel):
 
 def groupingButtonPressed(channel):
     global grouped
+    print("Grouping Button Pressed")
     checkIfGrouped()
+    print(grouped)
     if grouped:
         resetGroups()
         grouped = False
