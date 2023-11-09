@@ -38,10 +38,12 @@ def updateObjects():
 
 
 def joinGroups():
+    updateObjects()
     Küche[1].join(Küche[0])
 
 
 def joinGroup():
+    updateObjects()
     x = False
     if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
         Küche[0].pause()
