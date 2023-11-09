@@ -63,6 +63,7 @@ def resetGroups():
     Küche[0].unjoin()
     Küche[1].unjoin()
     joinGroups()
+    updateObjects()
 
 
 def checkIfGrouped():
