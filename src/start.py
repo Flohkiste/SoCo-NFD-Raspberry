@@ -54,11 +54,10 @@ def joinGroup():
     Wohnzimmer.join(Küche[0])
     Küche[1].join(Küche[0])
 
-    t = Timer(2.0, checkIfGrouped)
     if x:
         while grouped == False:
-            if not t.is_alive:
-                t.start()
+            time.sleep(2)
+            checkIfGrouped()
 
         Küche[0].play()
 
