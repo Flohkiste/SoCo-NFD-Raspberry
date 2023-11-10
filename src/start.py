@@ -185,7 +185,7 @@ groupingButtonPin = 16
 scanner = SimpleMFRC522()
 lastScans = [None, None, None, None]
 
-GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.add_event_detect(
     groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=5000
 )
