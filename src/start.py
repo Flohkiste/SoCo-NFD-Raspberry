@@ -1,4 +1,5 @@
 import pathlib
+from threading import Timer
 from encoder import Encoder
 import RPi.GPIO as GPIO
 from soco import SoCo
@@ -37,28 +38,48 @@ def updateObjects():
 
 
 def joinGroups():
+    print("Join Groups")
+    updateObjects()
     Küche[1].join(Küche[0])
 
 
 def joinGroup():
+    print("Join Group")
+    updateObjects()
     x = False
     if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
         Küche[0].pause()
         x = True
 
-    resetGroups()
     Wohnzimmer.join(Küche[0])
     Küche[1].join(Küche[0])
 
-    if x == True:
+    if x:
+        while grouped == False:
+            time.sleep(2)
+            checkIfGrouped()
+
         Küche[0].play()
 
 
 def resetGroups():
+    print("Reset")
+    x = False
+    if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
+        Küche[0].pause()
+        x = True
+
     Wohnzimmer.unjoin()
-    Küche[0].unjoin()
     Küche[1].unjoin()
     joinGroups()
+    updateObjects()
+
+    if x:
+        while grouped == False:
+            time.sleep(2)
+            checkIfGrouped()
+
+        Küche[0].play()
 
 
 def checkIfGrouped():
@@ -98,7 +119,10 @@ def playButtonPressed(channel):
 
 def groupingButtonPressed(channel):
     global grouped
+    print("Grouping Button Pressed")
     checkIfGrouped()
+    print(grouped)
+
     if grouped:
         resetGroups()
         grouped = False
@@ -175,9 +199,9 @@ groupingButtonPin = 16
 scanner = SimpleMFRC522()
 lastScans = [None, None, None, None]
 
-GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.add_event_detect(
-    groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=300
+    groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=5000
 )
 # GPIO.add_event_detect(
 #    playButtonPin, GPIO.FALLING, callback=playButtonPressed, bouncetime=300
