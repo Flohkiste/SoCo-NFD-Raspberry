@@ -199,8 +199,6 @@ setupPlaylists()
 
 try:
     while True:
-        if GPIO.input(groupingButtonPin):
-            print("Pressed")
         checkForScan()
 except KeyboardInterrupt:
     GPIO.cleanup()
