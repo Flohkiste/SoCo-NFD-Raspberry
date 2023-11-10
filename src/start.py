@@ -20,6 +20,7 @@ timer = None
 
 def resetCurrentPlaylist():
     global currentPlaylist
+    print("Times up")
     currentPlaylist = -1
 
 
