@@ -192,13 +192,13 @@ def checkForScan():
 
 def playlistFromId(id):
     global currentPlaylist, timer
-    timer.cancel()
-    print("Timer canceled")
-    timer = None
+    if timer != None:
+        timer.cancel()
+        print("Timer canceled")
+        timer = None
 
     if currentPlaylist == id:
         Küche[0].play()
-
     else:
         Küche[0].clear_queue()
         currentPlaylist = id
