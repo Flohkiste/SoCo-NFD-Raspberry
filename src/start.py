@@ -51,7 +51,6 @@ def joinGroup():
         Küche[0].pause()
         x = True
 
-    resetGroups()
     Wohnzimmer.join(Küche[0])
     Küche[1].join(Küche[0])
 
@@ -109,8 +108,8 @@ def groupingButtonPressed(channel):
     print("Grouping Button Pressed")
     checkIfGrouped()
     print(grouped)
+    resetGroups()
     if grouped:
-        resetGroups()
         grouped = False
     else:
         joinGroup()
