@@ -59,6 +59,8 @@ def joinGroup():
         while grouped == False:
             t.start
 
+        Küche[0].play()
+
 
 def resetGroups():
     print("Reset")
