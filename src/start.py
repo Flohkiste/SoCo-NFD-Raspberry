@@ -109,13 +109,12 @@ def groupingButtonPressed(channel):
     checkIfGrouped()
     print(grouped)
 
-
-#    resetGroups()
-#    if grouped:
-#        grouped = False
-#    else:
-#        joinGroup()
-#        grouped = True
+    if grouped:
+        resetGroups()
+        grouped = False
+    else:
+        joinGroup()
+        grouped = True
 
 
 def shuffleButtonPressed(channel):
