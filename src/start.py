@@ -175,10 +175,6 @@ def playlistFromId(id):
     Küche[0].play_from_queue(0)
 
 
-def group(channel):
-    print("group")
-
-
 GPIO.setmode(GPIO.BCM)
 
 volumeEncoder = Encoder(26, 17, valueVolumeChanged)
@@ -189,7 +185,9 @@ scanner = SimpleMFRC522()
 lastScans = [None, None, None, None]
 
 GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.add_event_detect(groupingButtonPin, GPIO.FALLING, callback=group, bouncetime=300)
+GPIO.add_event_detect(
+    groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=300
+)
 # GPIO.add_event_detect(
 #    playButtonPin, GPIO.FALLING, callback=playButtonPressed, bouncetime=300
 # )
