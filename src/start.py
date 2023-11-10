@@ -188,7 +188,7 @@ lastScans = [None, None, None, None]
 
 GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(
-    groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=500
+    groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=2000
 )
 # GPIO.add_event_detect(
 #    playButtonPin, GPIO.FALLING, callback=playButtonPressed, bouncetime=300
