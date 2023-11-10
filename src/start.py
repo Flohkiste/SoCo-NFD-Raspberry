@@ -22,7 +22,7 @@ def resetCurrentPlaylist():
     currentPlaylist = -1
 
 
-timer = th.Timer(10, resetCurrentPlaylist())
+timer = th.Timer(10, resetCurrentPlaylist)
 
 
 def setupPlaylists():
