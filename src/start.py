@@ -1,5 +1,5 @@
 import pathlib
-from threading import Timer
+import threading as th
 from encoder import Encoder
 import RPi.GPIO as GPIO
 from soco import SoCo
@@ -15,6 +15,14 @@ myShare = ShareLinkPlugin(Küche[0])
 currentPlaylist = -1
 grouped = False
 iplay = False
+
+
+def resetCurrentPlaylist():
+    global currentPlaylist
+    currentPlaylist = -1
+
+
+timer = th.Timer(10, resetCurrentPlaylist())
 
 
 def setupPlaylists():
@@ -183,12 +191,14 @@ def checkForScan():
 def playlistFromId(id):
     global currentPlaylist
     if currentPlaylist == id:
+        timer.cancel()
         Küche[0].play()
     else:
         Küche[0].clear_queue()
         currentPlaylist = id
         ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[id])
         Küche[0].play_from_queue(0)
+        timer.start()
 
 
 GPIO.setmode(GPIO.BCM)
