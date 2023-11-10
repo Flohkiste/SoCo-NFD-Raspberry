@@ -15,14 +15,12 @@ myShare = ShareLinkPlugin(Küche[0])
 currentPlaylist = -1
 grouped = False
 iplay = False
+timer = None
 
 
 def resetCurrentPlaylist():
     global currentPlaylist
     currentPlaylist = -1
-
-
-timer = th.Timer(10, resetCurrentPlaylist)
 
 
 def setupPlaylists():
@@ -189,16 +187,20 @@ def checkForScan():
 
 
 def playlistFromId(id):
-    global currentPlaylist
+    global currentPlaylist, timer
     if currentPlaylist == id:
         timer.cancel()
+        print("Timer canceled")
+        timer = None
         Küche[0].play()
     else:
         Küche[0].clear_queue()
         currentPlaylist = id
         ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[id])
         Küche[0].play_from_queue(0)
+        timer = th.Timer(5.0, resetCurrentPlaylist)
         timer.start()
+        print("Timer Started")
 
 
 GPIO.setmode(GPIO.BCM)
