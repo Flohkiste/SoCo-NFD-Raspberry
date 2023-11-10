@@ -175,7 +175,7 @@ def playlistFromId(id):
     Küche[0].play_from_queue(0)
 
 
-def group():
+def group(channel):
     print("group")
 
 
