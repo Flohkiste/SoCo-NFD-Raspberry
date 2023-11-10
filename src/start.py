@@ -181,6 +181,9 @@ def checkForScan():
     ):
         print("Stop")
         Küche[0].pause()
+        timer = th.Timer(5.0, resetCurrentPlaylist)
+        timer.start()
+        print("Timer Started")
         iplay = False
     else:
         print(" ")
@@ -198,9 +201,6 @@ def playlistFromId(id):
         currentPlaylist = id
         ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[id])
         Küche[0].play_from_queue(0)
-        timer = th.Timer(5.0, resetCurrentPlaylist)
-        timer.start()
-        print("Timer Started")
 
 
 GPIO.setmode(GPIO.BCM)
