@@ -64,11 +64,23 @@ def joinGroup():
 
 def resetGroups():
     print("Reset")
+    x = False
+    if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
+        Küche[0].pause()
+        x = True
+
     Wohnzimmer.unjoin()
     Küche[0].unjoin()
     Küche[1].unjoin()
     joinGroups()
     updateObjects()
+
+    if x:
+        while grouped == False:
+            time.sleep(2)
+            checkIfGrouped()
+
+        Küche[0].play()
 
 
 def checkIfGrouped():
