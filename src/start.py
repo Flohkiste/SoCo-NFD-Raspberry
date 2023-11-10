@@ -70,7 +70,6 @@ def resetGroups():
         x = True
 
     Wohnzimmer.unjoin()
-    Küche[0].unjoin()
     Küche[1].unjoin()
     joinGroups()
     updateObjects()
