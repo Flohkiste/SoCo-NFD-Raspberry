@@ -187,7 +187,7 @@ lastScans = [None, None, None, None]
 
 GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(
-    groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=2000
+    groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=5000
 )
 # GPIO.add_event_detect(
 #    playButtonPin, GPIO.FALLING, callback=playButtonPressed, bouncetime=300
@@ -199,6 +199,8 @@ setupPlaylists()
 
 try:
     while True:
+        if GPIO.input(channel):
+            print("Pressed")
         checkForScan()
 except KeyboardInterrupt:
     GPIO.cleanup()
