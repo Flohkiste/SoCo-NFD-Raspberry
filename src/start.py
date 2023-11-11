@@ -112,9 +112,9 @@ def clearQueue():
 def valueVolumeChanged(value, direction):
     print("Volume: {}, Direction: {}".format(value, direction))
     if direction == "R":
-        Küche[0].group.set_relative_volume(10)
+        Küche[0].group.set_relative_volume(1)
     elif direction == "L":
-        Küche[0].group.set_relative_volume(-10)
+        Küche[0].group.set_relative_volume(-1)
 
 
 def playButtonPressed(channel):
