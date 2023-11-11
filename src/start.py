@@ -211,7 +211,7 @@ GPIO.setmode(GPIO.BCM)
 volumeEncoder = Encoder(26, 17, valueVolumeChanged)
 # playButtonPin = 27
 groupingButtonPin = 16
-# shuffleButtonPin = 0
+shuffleButtonPin = 27
 scanner = SimpleMFRC522()
 lastScans = [None, None, None, None]
 
@@ -219,9 +219,9 @@ GPIO.setup(groupingButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.add_event_detect(
     groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=5000
 )
-# GPIO.add_event_detect(
-#    playButtonPin, GPIO.FALLING, callback=playButtonPressed, bouncetime=300
-# )
+GPIO.add_event_detect(
+    shuffleButtonPin, GPIO.FALLING, callback=shuffleButtonPressed, bouncetime=1000
+)
 
 
 resetGroups()
