@@ -243,7 +243,7 @@ def playlistFromId(id):
 
 GPIO.setmode(GPIO.BCM)
 
-volumeEncoder = Encoder(26, 17, valueVolumeChanged)
+volumeEncoder = Encoder(26, 17, callback=valueVolumeChanged)
 # playButtonPin = 27
 groupingButtonPin = 16
 shuffleButtonPin = 27
