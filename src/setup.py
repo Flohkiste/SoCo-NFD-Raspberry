@@ -24,7 +24,7 @@ def setPlaylists():
             print("Please place the RFID chip on the scanner")
             id = scanner.read()[0]
             playlists.append(playlist + "\n")
-            iDs.append(id + "\n")
+            iDs.append(str(id) + "\n")
             # scanner.write(str(len(playlists) - 1))
 
     playlistFile.writelines(playlists)
