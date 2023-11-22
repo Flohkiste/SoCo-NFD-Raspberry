@@ -136,6 +136,7 @@ def valueVolumeChanged(value, direction):
             print(x)
         elif d == "L" and Küche[0].volume > 0:
             updateObjects()
+            print("L")
             Küche[0].set_relative_volume(-1)
             x = 0
 
