@@ -129,8 +129,10 @@ def valueVolumeChanged(value, direction):
 
         if direction == "R" and Küche[0].volume < 100:
             Küche[0].volume += 1
+            time.sleep(0.5)  # Add a delay here
         elif direction == "L" and Küche[0].volume > 0:
             Küche[0].volume -= 1
+            time.sleep(0.5)  # And here
 
         new_volume = Küche[0].volume
         print("New volume: {}".format(new_volume))
