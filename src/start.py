@@ -118,6 +118,7 @@ debounce_time = 0.1  # 100 milliseconds
 def valueVolumeChanged(value, direction):
     global last_read_time
     current_time = time.time()
+    x = 0
     if current_time - last_read_time > debounce_time:
         updateObjects()
         v = volumeEncoder.getValue()
@@ -131,9 +132,12 @@ def valueVolumeChanged(value, direction):
         if d == "R" and Küche[0].volume < 100:
             updateObjects()
             Küche[0].volume += 1
+            x += 1
+            print(x)
         elif d == "L" and Küche[0].volume > 0:
             updateObjects()
             Küche[0].set_relative_volume(-1)
+            x = 0
 
         new_volume = Küche[0].volume
         time.sleep(0.5)
