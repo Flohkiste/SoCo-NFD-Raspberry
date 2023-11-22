@@ -109,16 +109,20 @@ def clearQueue():
         Wohnzimmer.clear_queue()
 
 
+import time
+
+last_read_time = time.time()
+debounce_time = 0.1  # 100 milliseconds
+
+
 def valueVolumeChanged(value, direction):
-    value = volumeEncoder.getValue()
-    direction = volumeEncoder.direction
-    print("Volume: {}, Direction: {}".format(value, direction))
-
-
-#    if direction == "R":
-#        Küche[0].group.set_relative_volume(-1)
-#    elif direction == "L":
-#        Küche[0].group.set_relative_volume(1)
+    global last_read_time
+    current_time = time.time()
+    if current_time - last_read_time > debounce_time:
+        value = volumeEncoder.getValue()
+        direction = volumeEncoder.direction
+        print("Volume: {}, Direction: {}".format(value, direction))
+        last_read_time = current_time
 
 
 def playButtonPressed(channel):
