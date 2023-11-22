@@ -111,22 +111,24 @@ def clearQueue():
 
 
 def valueVolumeChanged(value, direction):
+    print(value, direction)
+
     start_time = time.time()
     updateObjects()
     print("updateObjects() took {} seconds".format(time.time() - start_time))
 
-    print(value, direction)
-
     if direction:
         print("R")
+        start_time = time.time()
         # volumeUp()
         Küche[0].volume += 1
+        print("volumeUp() took {} seconds".format(time.time() - start_time))
     elif not direction:
         print("L")
+        start_time = time.time()
         # volumeDown()
         Küche[0].volume -= 1
-    else:
-        print("Unexpected direction: {}".format(direction))
+        print("volumeDown() took {} seconds".format(time.time() - start_time))
 
 
 def playButtonPressed(channel):
