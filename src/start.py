@@ -121,6 +121,8 @@ def valueVolumeChanged(value, direction):
         print("L")
         # volumeDown()
         Küche[0].volume -= 1
+    else:
+        print("Unexpected direction: {}".format(direction))
 
 
 def playButtonPressed(channel):
