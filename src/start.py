@@ -42,6 +42,12 @@ def setupPlaylists():
 
     playlistFile.close()
 
+    line_list = idFile.readlines()
+    for line in line_list:
+        Playlists.append(line.strip())
+
+    idFile.close()
+
 
 def updateObjects():
     global Wohnzimmer, Küche, volumeEncoder
