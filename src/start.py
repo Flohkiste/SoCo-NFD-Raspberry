@@ -111,33 +111,7 @@ def clearQueue():
 
 
 def valueVolumeChanged(value, direction):
-    updateObjects()
-    v = volumeEncoder.getValue()
-    d = volumeEncoder.direction
-    print("Volume: {}, Direction: {}".format(v, d))
-
-    # Store direction in a local variable
-    dir = d
-
-    if dir != direction:
-        print(
-            "Mismatch: volumeEncoder.direction is {}, but direction argument is {}".format(
-                dir, direction
-            )
-        )
-
-    current_volume = Küche[0].volume
-    print("Current volume: {}".format(current_volume))
-
-    if volumeEncoder.direction == "R" and Küche[0].volume < 100:
-        # volumeUp()
-        print("R")
-    elif volumeEncoder.direction == "L" and Küche[0].volume > 0:
-        # volumeDown()
-        print("L")
-
-    new_volume = Küche[0].volume
-    print("New volume: {}".format(new_volume))
+    print(value, direction)
 
 
 def volumeUp():
