@@ -128,9 +128,11 @@ def valueVolumeChanged(value, direction):
         print("Current volume: {}".format(current_volume))
 
         if direction == 1:
-            Küche[0].volume = min(current_volume + 1, 100)
+            if Küche[0].volume <= 100:
+                Küche[0].volume += 1
         elif direction == -1:
-            Küche[0].volume = max(current_volume - 1, 0)
+            if Küche[0].volume >= 0:
+                Küche[0].volume -= 1
 
         new_volume = Küche[0].volume
         print("New volume: {}".format(new_volume))
