@@ -110,35 +110,24 @@ def clearQueue():
         Wohnzimmer.clear_queue()
 
 
-import time
-
-last_read_time = time.time()
-debounce_time = 0.1  # 100 milliseconds
-
-
 def valueVolumeChanged(value, direction):
-    global last_read_time, x
-    current_time = time.time()
-    if current_time - last_read_time > debounce_time:
-        updateObjects()
-        v = volumeEncoder.getValue()
-        d = volumeEncoder.direction
-        print("Volume: {}, Direction: {}".format(v, d))
-        last_read_time = current_time
+    updateObjects()
+    v = volumeEncoder.getValue()
+    d = volumeEncoder.direction
+    print("Volume: {}, Direction: {}".format(v, d))
 
-        current_volume = Küche[0].volume
-        print("Current volume: {}".format(current_volume))
+    current_volume = Küche[0].volume
+    print("Current volume: {}".format(current_volume))
 
-        if d == "R" and Küche[0].volume < 100:
-            # volumeUp()
-            print("R")
-        elif d == "L" and Küche[0].volume > 0:
-            # volumeDown()
-            print("L")
+    if d == "R" and Küche[0].volume < 100:
+        # volumeUp()
+        print("R")
+    elif d == "L" and Küche[0].volume > 0:
+        # volumeDown()
+        print("L")
 
-        new_volume = Küche[0].volume
-        time.sleep(0.5)
-        print("New volume: {}".format(new_volume))
+    new_volume = Küche[0].volume
+    print("New volume: {}".format(new_volume))
 
 
 def volumeUp():
