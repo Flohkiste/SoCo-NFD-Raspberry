@@ -130,18 +130,21 @@ def valueVolumeChanged(value, direction):
         print("Current volume: {}".format(current_volume))
 
         if d == "R" and Küche[0].volume < 100:
-            updateObjects()
-            Küche[0].volume += 1
-            x += 1
-            print(x)
+            volumeUp()
         elif d == "L" and Küche[0].volume > 0:
-            updateObjects()
-            Küche[0].set_relative_volume(-1)
-            x = 0
+            volumeDown()
 
         new_volume = Küche[0].volume
         time.sleep(0.5)
         print("New volume: {}".format(new_volume))
+
+
+def volumeUp():
+    Küche[0].set_relative_volume(1)
+
+
+def volumeDown():
+    Küche[0].set_relative_volume(-1)
 
 
 def playButtonPressed(channel):
