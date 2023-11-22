@@ -49,6 +49,8 @@ def setupPlaylists():
         Playlists.append(line.strip())
 
     idFile.close()
+    print(";".join(Playlists))
+    print(";".join(iDs))
 
 
 def updateObjects():
