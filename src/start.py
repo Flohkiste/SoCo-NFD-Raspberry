@@ -16,6 +16,7 @@ currentPlaylist = -1
 grouped = False
 iplay = False
 timer = None
+x = 0
 
 
 def resetCurrentPlaylist():
@@ -39,7 +40,7 @@ def setupPlaylists():
 
 
 def updateObjects():
-    global Wohnzimmer, Küche
+    global Wohnzimmer, Küche, volumeEncoder
     Wohnzimmer = SoCo("192.168.150.28")
     Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
 
@@ -109,12 +110,35 @@ def clearQueue():
         Wohnzimmer.clear_queue()
 
 
+import threading
+
+volume_change = 0
+volume_lock = threading.Lock()
+
+
+def applyVolumeChange():
+    global volume_change
+    with volume_lock:
+        change = volume_change
+        volume_change = 0
+    Küche[0].volume += change
+
+
 def valueVolumeChanged(value, direction):
-    print("Volume: {}, Direction: {}".format(value, direction))
-    if direction == "R":
-        Küche[0].group.set_relative_volume(-1)
-    elif direction == "L":
-        Küche[0].group.set_relative_volume(1)
+    global volume_change
+
+    print(value, direction)
+
+    with volume_lock:
+        if direction:
+            print("R")
+            volume_change += 1
+        else:
+            print("L")
+            volume_change -= 1
+
+    # Apply volume changes in a separate thread
+    threading.Thread(target=applyVolumeChange).start()
 
 
 def playButtonPressed(channel):
@@ -212,7 +236,7 @@ def playlistFromId(id):
 
 GPIO.setmode(GPIO.BCM)
 
-volumeEncoder = Encoder(26, 17, valueVolumeChanged)
+volumeEncoder = Encoder(26, 17, callback=valueVolumeChanged)
 # playButtonPin = 27
 groupingButtonPin = 16
 shuffleButtonPin = 27
@@ -231,6 +255,8 @@ GPIO.add_event_detect(
 
 resetGroups()
 setupPlaylists()
+Küche[0].volume = 10
+print("Volume: {}".format(Küche[0].volume))
 
 try:
     while True:
