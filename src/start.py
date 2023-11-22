@@ -43,6 +43,8 @@ def setupPlaylists():
     playlistFile.close()
 
     line_list = idFile.readlines()
+    print(f"Read {len(line_list)} lines.")
+
     for line in line_list:
         Playlists.append(line.strip())
 
