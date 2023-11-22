@@ -26,41 +26,41 @@ class Encoder:
 
         if self.state == "00":  # Resting position
             if newState == "01":  # Turned right 1
-                self.direction = "R"
+                self.direction = True
             elif newState == "10":  # Turned left 1
-                self.direction = "L"
+                self.direction = False
 
         elif self.state == "01":  # R1 or L3 position
             if newState == "11":  # Turned right 1
-                self.direction = "R"
+                self.direction = True
             elif newState == "00":  # Turned left 1
-                if self.direction == "L":
+                if self.direction == False:
                     self.value = self.value - 1
                     if self.callback is not None:
                         self.callback(self.value, self.direction)
 
         elif self.state == "10":  # R3 or L1
             if newState == "11":  # Turned left 1
-                self.direction = "L"
+                self.direction = False
             elif newState == "00":  # Turned right 1
-                if self.direction == "R":
+                if self.direction == True:
                     self.value = self.value + 1
                     if self.callback is not None:
                         self.callback(self.value, self.direction)
 
         else:  # self.state == "11"
             if newState == "01":  # Turned left 1
-                self.direction = "L"
+                self.direction = False
             elif newState == "10":  # Turned right 1
-                self.direction = "R"
+                self.direction = True
             elif (
                 newState == "00"
             ):  # Skipped an intermediate 01 or 10 state, but if we know direction then a turn is complete
-                if self.direction == "L":
+                if self.direction == False:
                     self.value = self.value - 1
                     if self.callback is not None:
                         self.callback(self.value, self.direction)
-                elif self.direction == "R":
+                elif self.direction == True:
                     self.value = self.value + 1
                     if self.callback is not None:
                         self.callback(self.value, self.direction)
