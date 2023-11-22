@@ -109,7 +109,9 @@ def clearQueue():
         Wohnzimmer.clear_queue()
 
 
-def valueVolumeChanged(value, direction):
+def valueVolumeChanged():
+    value = volumeEncoder.getValue()
+    direction = volumeEncoder.direction()
     print("Volume: {}, Direction: {}".format(value, direction))
     if direction == "R":
         Küche[0].group.set_relative_volume(-1)
