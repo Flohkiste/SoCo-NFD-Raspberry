@@ -115,11 +115,10 @@ def valueVolumeChanged(value, direction):
 
     if direction:
         print("R")
-        volumeUp()
+        # volumeUp()
     elif not direction:
         print("L")
-        volumeDown()
-    time.sleep(0.25)
+        # volumeDown()
 
 
 def volumeUp():
