@@ -129,10 +129,10 @@ def valueVolumeChanged(value, direction):
     current_volume = Küche[0].volume
     print("Current volume: {}".format(current_volume))
 
-    if dir == "R" and Küche[0].volume < 100:
+    if volumeEncoder.direction == "R" and Küche[0].volume < 100:
         # volumeUp()
         print("R")
-    elif dir == "L" and Küche[0].volume > 0:
+    elif volumeEncoder.direction == "L" and Küche[0].volume > 0:
         # volumeDown()
         print("L")
 
