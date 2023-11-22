@@ -116,17 +116,11 @@ def valueVolumeChanged(value, direction):
     if direction:
         print("R")
         # volumeUp()
+        Küche[0].volume += 1
     elif not direction:
         print("L")
         # volumeDown()
-
-
-def volumeUp():
-    Küche[0].set_relative_volume(1)
-
-
-def volumeDown():
-    Küche[0].set_relative_volume(-1)
+        Küche[0].volume -= 1
 
 
 def playButtonPressed(channel):
