@@ -116,20 +116,23 @@ def valueVolumeChanged(value, direction):
     d = volumeEncoder.direction
     print("Volume: {}, Direction: {}".format(v, d))
 
-    if d != direction:
+    # Store direction in a local variable
+    dir = d
+
+    if dir != direction:
         print(
             "Mismatch: volumeEncoder.direction is {}, but direction argument is {}".format(
-                d, direction
+                dir, direction
             )
         )
 
     current_volume = Küche[0].volume
     print("Current volume: {}".format(current_volume))
 
-    if d == "R" and Küche[0].volume < 100:
+    if dir == "R" and Küche[0].volume < 100:
         # volumeUp()
         print("R")
-    elif d == "L" and Küche[0].volume > 0:
+    elif dir == "L" and Küche[0].volume > 0:
         # volumeDown()
         print("L")
 
