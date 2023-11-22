@@ -39,9 +39,10 @@ def setupPlaylists():
 
 
 def updateObjects():
-    global Wohnzimmer, Küche
+    global Wohnzimmer, Küche, volumeEncoder
     Wohnzimmer = SoCo("192.168.150.28")
     Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
+    volumeEncoder = Encoder(26, 17, valueVolumeChanged)
 
 
 def joinGroups():
