@@ -119,6 +119,7 @@ def valueVolumeChanged(value, direction):
     global last_read_time
     current_time = time.time()
     if current_time - last_read_time > debounce_time:
+        updateObjects()
         value = volumeEncoder.getValue()
         direction = volumeEncoder.direction
         print("Volume: {}, Direction: {}".format(value, direction))
@@ -128,8 +129,10 @@ def valueVolumeChanged(value, direction):
         print("Current volume: {}".format(current_volume))
 
         if direction == "R" and Küche[0].volume < 100:
+            updateObjects()
             Küche[0].volume += 1
         elif direction == "L" and Küche[0].volume > 0:
+            updateObjects()
             Küche[0].set_relative_volume(-1)
 
         new_volume = Küche[0].volume
