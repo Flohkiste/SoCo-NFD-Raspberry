@@ -46,7 +46,7 @@ def setupPlaylists():
     print(f"Read {len(line_list)} lines.")
 
     for line in line_list:
-        iDs.append(int(line.strip()))  # Convert ID to integer
+        iDs.append(str(line.strip()))  # Convert ID to integer
 
     idFile.close()
     print(";".join(Playlists))
