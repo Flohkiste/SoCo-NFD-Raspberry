@@ -110,25 +110,27 @@ def clearQueue():
         Wohnzimmer.clear_queue()
 
 
-def valueVolumeChanged(value, direction):
-    print(value, direction)
+volume_change = 0
 
-    start_time = time.time()
-    updateObjects()
-    print("updateObjects() took {} seconds".format(time.time() - start_time))
+
+def valueVolumeChanged(value, direction):
+    global volume_change
+
+    print(value, direction)
 
     if direction:
         print("R")
-        start_time = time.time()
-        # volumeUp()
-        Küche[0].volume += 1
-        print("volumeUp() took {} seconds".format(time.time() - start_time))
-    elif not direction:
+        volume_change += 1
+    else:
         print("L")
+        volume_change -= 1
+
+    # Apply volume changes in a batch
+    if abs(volume_change) >= 10:
         start_time = time.time()
-        # volumeDown()
-        Küche[0].volume -= 1
-        print("volumeDown() took {} seconds".format(time.time() - start_time))
+        Küche[0].volume += volume_change
+        print("volume change took {} seconds".format(time.time() - start_time))
+        volume_change = 0
 
 
 def playButtonPressed(channel):
