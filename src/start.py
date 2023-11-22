@@ -11,6 +11,7 @@ from mfrc522 import SimpleMFRC522
 Wohnzimmer = SoCo("192.168.150.28")
 Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
 Playlists = []
+iDs = []
 myShare = ShareLinkPlugin(Küche[0])
 currentPlaylist = -1
 grouped = False
@@ -26,9 +27,12 @@ def resetCurrentPlaylist():
 
 
 def setupPlaylists():
-    print("Opening file...")
-    filepath = str(pathlib.Path(__file__).parent.resolve()) + "/playlists.txt"
-    playlistFile = open(filepath, "r")
+    global Playlists, scanner, iDs
+    filepathPlaylists = str(pathlib.Path(__file__).parent.resolve()) + "/playlists.txt"
+    filepathIDs = str(pathlib.Path(__file__).parent.resolve()) + "/nfcIDs.txt"
+    playlistFile = open(filepathPlaylists, "r")
+    idFile = open(filepathIDs, "r")
+
     print("Reading lines...")
     line_list = playlistFile.readlines()
     print(f"Read {len(line_list)} lines.")
@@ -37,6 +41,14 @@ def setupPlaylists():
         Playlists.append(line.strip())
 
     playlistFile.close()
+
+    line_list = idFile.readlines()
+    print(f"Read {len(line_list)} lines.")
+
+    for line in line_list:
+        iDs.append(int(line.strip()))  # Convert ID to integer
+
+    idFile.close()
 
 
 def updateObjects():
@@ -181,41 +193,49 @@ def updateScan():
     time.sleep(0.001)
     lastScans[1] = lastScans[0]
     time.sleep(0.001)
-    lastScans[0] = scanner.read_no_block()[1]
+    lastScans[0] = scanner.read_no_block()[0]
 
 
 def checkForScan():
     global iplay, currentPlaylist, timer
     y = 0
-    updateScan()
-    for x in range(len(lastScans)):
-        if lastScans[x] != None:
-            y += 1
 
-    if (y == 2) & (currentPlaylist != lastScans[0]) & (iplay == False):
-        print("play")
+    try:
+        updateScan()
         for x in range(len(lastScans)):
             if lastScans[x] != None:
-                playlistFromId(int(lastScans[x]))
-                break
-        print(currentPlaylist)
-        iplay = True
-    elif (
-        (y < 2)
-        & (iplay == True)
-        & (
-            Küche[0].get_current_transport_info()["current_transport_state"]
-            == "PLAYING"
-        )
-    ):
-        print("Stop")
-        Küche[0].pause()
-        timer = th.Timer(5.0, resetCurrentPlaylist)
-        timer.start()
-        print("Timer Started")
-        iplay = False
-    else:
-        print(" ")
+                y += 1
+
+        if (y == 2) & (currentPlaylist != lastScans[0]) & (iplay == False):
+            print("play")
+            for x in range(len(lastScans)):
+                if lastScans[x] != None:
+                    playlistFromId(int(lastScans[x]))
+                    break
+            print(currentPlaylist)
+            iplay = True
+        elif (
+            (y < 2)
+            & (iplay == True)
+            & (
+                Küche[0].get_current_transport_info()["current_transport_state"]
+                == "PLAYING"
+            )
+        ):
+            print("Stop")
+            Küche[0].pause()
+            timer = th.Timer(5.0, resetCurrentPlaylist)
+            timer.start()
+            print("Timer Started")
+            iplay = False
+        else:
+            print(" ")
+
+    except Exception as e:
+        if "AUTH ERROR" in str(e):
+            pass  # Ignore the error
+        else:
+            raise  # Re-raise the error if it's not an "AUTH ERROR"
 
 
 def playlistFromId(id):
@@ -225,12 +245,12 @@ def playlistFromId(id):
         print("Timer canceled")
         timer = None
 
-    if currentPlaylist == id:
+    if currentPlaylist == iDs.index(id):
         Küche[0].play()
     else:
         Küche[0].clear_queue()
-        currentPlaylist = id
-        ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[id])
+        currentPlaylist = iDs.index(id)
+        ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[iDs.index(id)])
         Küche[0].play_from_queue(0)
 
 

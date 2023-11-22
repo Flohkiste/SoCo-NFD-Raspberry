@@ -1,14 +1,17 @@
 import pathlib
 from mfrc522 import SimpleMFRC522
 
-Playlists = []
+playlists = []
+iDs = []
 scanner = SimpleMFRC522()
 
 
 def setPlaylists():
-    global Playlists, scanner
-    filepath = str(pathlib.Path(__file__).parent.resolve()) + "/playlists.txt"
-    playlistFile = open(filepath, "w")
+    global playlists, scanner, iDs
+    filepathPlaylists = str(pathlib.Path(__file__).parent.resolve()) + "/playlists.txt"
+    filepathIDs = str(pathlib.Path(__file__).parent.resolve()) + "/nfcIDs.txt"
+    playlistFile = open(filepathPlaylists, "w")
+    idFile = open(filepathIDs, "w")
 
     while True:
         print(
@@ -19,12 +22,15 @@ def setPlaylists():
             break
         else:
             print("Please place the RFID chip on the scanner")
-            scanner.read()
-            Playlists.append(playlist + "\n")
-            scanner.write(str(len(Playlists) - 1))
+            id = scanner.read()[0]
+            playlists.append(playlist + "\n")
+            iDs.append(str(id) + "\n")
+            # scanner.write(str(len(playlists) - 1))
 
-    playlistFile.writelines(Playlists)
+    playlistFile.writelines(playlists)
+    idFile.writelines(iDs)
     playlistFile.close()
+    idFile.close()
 
 
 setPlaylists()
