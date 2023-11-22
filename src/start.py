@@ -113,6 +113,9 @@ def clearQueue():
 def valueVolumeChanged(value, direction):
     print(value, direction)
 
+    if direction:
+        print("R")
+
 
 def volumeUp():
     Küche[0].set_relative_volume(1)
