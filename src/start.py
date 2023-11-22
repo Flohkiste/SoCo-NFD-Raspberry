@@ -124,14 +124,16 @@ def valueVolumeChanged(value, direction):
         print("Volume: {}, Direction: {}".format(value, direction))
         last_read_time = current_time
 
-        # Get the current volume
         current_volume = Küche[0].volume
+        print("Current volume: {}".format(current_volume))
 
-        # Increase or decrease the volume based on the direction
         if direction == 1:
             Küche[0].volume = min(current_volume + 1, 100)
         elif direction == -1:
             Küche[0].volume = max(current_volume - 1, 0)
+
+        new_volume = Küche[0].volume
+        print("New volume: {}".format(new_volume))
 
 
 def playButtonPressed(channel):
