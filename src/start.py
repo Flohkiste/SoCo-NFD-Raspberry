@@ -130,9 +130,11 @@ def valueVolumeChanged(value, direction):
         print("Current volume: {}".format(current_volume))
 
         if d == "R" and Küche[0].volume < 100:
-            volumeUp()
+            # volumeUp()
+            print("R")
         elif d == "L" and Küche[0].volume > 0:
-            volumeDown()
+            # volumeDown()
+            print("L")
 
         new_volume = Küche[0].volume
         time.sleep(0.5)
