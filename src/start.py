@@ -110,7 +110,7 @@ def clearQueue():
 
 
 def valueVolumeChanged(value, direction):
-    value = volumeEncoder.getValue
+    value = volumeEncoder.getValue()
     direction = volumeEncoder.direction
     print("Volume: {}, Direction: {}".format(value, direction))
     if direction == "R":
