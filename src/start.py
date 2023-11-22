@@ -199,35 +199,43 @@ def updateScan():
 def checkForScan():
     global iplay, currentPlaylist, timer
     y = 0
-    updateScan()
-    for x in range(len(lastScans)):
-        if lastScans[x] != None:
-            y += 1
 
-    if (y == 2) & (currentPlaylist != lastScans[0]) & (iplay == False):
-        print("play")
+    try:
+        updateScan()
         for x in range(len(lastScans)):
             if lastScans[x] != None:
-                playlistFromId(int(lastScans[x]))
-                break
-        print(currentPlaylist)
-        iplay = True
-    elif (
-        (y < 2)
-        & (iplay == True)
-        & (
-            Küche[0].get_current_transport_info()["current_transport_state"]
-            == "PLAYING"
-        )
-    ):
-        print("Stop")
-        Küche[0].pause()
-        timer = th.Timer(5.0, resetCurrentPlaylist)
-        timer.start()
-        print("Timer Started")
-        iplay = False
-    else:
-        print(" ")
+                y += 1
+
+        if (y == 2) & (currentPlaylist != lastScans[0]) & (iplay == False):
+            print("play")
+            for x in range(len(lastScans)):
+                if lastScans[x] != None:
+                    playlistFromId(int(lastScans[x]))
+                    break
+            print(currentPlaylist)
+            iplay = True
+        elif (
+            (y < 2)
+            & (iplay == True)
+            & (
+                Küche[0].get_current_transport_info()["current_transport_state"]
+                == "PLAYING"
+            )
+        ):
+            print("Stop")
+            Küche[0].pause()
+            timer = th.Timer(5.0, resetCurrentPlaylist)
+            timer.start()
+            print("Timer Started")
+            iplay = False
+        else:
+            print(" ")
+
+    except Exception as e:
+        if "AUTH ERROR" in str(e):
+            pass  # Ignore the error
+        else:
+            raise  # Re-raise the error if it's not an "AUTH ERROR"
 
 
 def playlistFromId(id):
