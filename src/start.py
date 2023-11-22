@@ -110,7 +110,18 @@ def clearQueue():
         Wohnzimmer.clear_queue()
 
 
+import threading
+
 volume_change = 0
+volume_lock = threading.Lock()
+
+
+def applyVolumeChange():
+    global volume_change
+    with volume_lock:
+        change = volume_change
+        volume_change = 0
+    Küche[0].volume += change
 
 
 def valueVolumeChanged(value, direction):
@@ -118,19 +129,17 @@ def valueVolumeChanged(value, direction):
 
     print(value, direction)
 
-    if direction:
-        print("R")
-        volume_change += 1
-    else:
-        print("L")
-        volume_change -= 1
+    with volume_lock:
+        if direction:
+            print("R")
+            volume_change += 1
+        else:
+            print("L")
+            volume_change -= 1
 
-    # Apply volume changes in a batch
+    # Apply volume changes in a separate thread
     if abs(volume_change) >= 10:
-        start_time = time.time()
-        Küche[0].volume += volume_change
-        print("volume change took {} seconds".format(time.time() - start_time))
-        volume_change = 0
+        threading.Thread(target=applyVolumeChange).start()
 
 
 def playButtonPressed(channel):
