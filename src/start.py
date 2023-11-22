@@ -11,6 +11,7 @@ from mfrc522 import SimpleMFRC522
 Wohnzimmer = SoCo("192.168.150.28")
 Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
 Playlists = []
+iDs = []
 myShare = ShareLinkPlugin(Küche[0])
 currentPlaylist = -1
 grouped = False
@@ -26,9 +27,12 @@ def resetCurrentPlaylist():
 
 
 def setupPlaylists():
-    print("Opening file...")
-    filepath = str(pathlib.Path(__file__).parent.resolve()) + "/playlists.txt"
-    playlistFile = open(filepath, "r")
+    global Playlists, scanner, iDs
+    filepathPlaylists = str(pathlib.Path(__file__).parent.resolve()) + "/playlists.txt"
+    filepathIDs = str(pathlib.Path(__file__).parent.resolve()) + "/nfcIDs.txt"
+    playlistFile = open(filepathPlaylists, "r")
+    idFile = open(filepathIDs, "r")
+
     print("Reading lines...")
     line_list = playlistFile.readlines()
     print(f"Read {len(line_list)} lines.")
@@ -181,7 +185,7 @@ def updateScan():
     time.sleep(0.001)
     lastScans[1] = lastScans[0]
     time.sleep(0.001)
-    lastScans[0] = scanner.read_no_block()[1]
+    lastScans[0] = scanner.read_no_block()[0]
 
 
 def checkForScan():
@@ -225,12 +229,12 @@ def playlistFromId(id):
         print("Timer canceled")
         timer = None
 
-    if currentPlaylist == id:
+    if currentPlaylist == iDs.index(id):
         Küche[0].play()
     else:
         Küche[0].clear_queue()
-        currentPlaylist = id
-        ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[id])
+        currentPlaylist = iDs.index(id)
+        ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[iDs.index(id)])
         Küche[0].play_from_queue(0)
 
 
