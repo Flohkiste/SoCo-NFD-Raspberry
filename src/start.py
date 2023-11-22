@@ -250,6 +250,8 @@ GPIO.add_event_detect(
 
 resetGroups()
 setupPlaylists()
+Küche[0].volume = 20
+print("Volume: {}".format(Küche[0].volume))
 
 try:
     while True:
