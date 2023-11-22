@@ -129,10 +129,10 @@ def valueVolumeChanged(value, direction):
 
         if direction == 1:
             if Küche[0].volume <= 100:
-                Küche[0].volume += 1
+                Küche[0].set_relative_volume(+1)
         elif direction == -1:
             if Küche[0].volume >= 0:
-                Küche[0].volume -= 1
+                Küche[0].set_relative_volume(-1)
 
         new_volume = Küche[0].volume
         print("New volume: {}".format(new_volume))
