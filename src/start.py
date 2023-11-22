@@ -111,6 +111,10 @@ def clearQueue():
 
 
 def valueVolumeChanged(value, direction):
+    start_time = time.time()
+    updateObjects()
+    print("updateObjects() took {} seconds".format(time.time() - start_time))
+
     print(value, direction)
 
     if direction:
