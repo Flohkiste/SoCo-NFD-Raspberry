@@ -109,7 +109,7 @@ def clearQueue():
         Wohnzimmer.clear_queue()
 
 
-def valueVolumeChanged():
+def valueVolumeChanged(value, direction):
     value = volumeEncoder.getValue()
     direction = volumeEncoder.direction()
     print("Volume: {}, Direction: {}".format(value, direction))
