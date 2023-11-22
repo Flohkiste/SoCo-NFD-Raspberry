@@ -115,6 +115,8 @@ def valueVolumeChanged(value, direction):
 
     if direction:
         print("R")
+    elif not direction:
+        print("L")
 
 
 def volumeUp():
