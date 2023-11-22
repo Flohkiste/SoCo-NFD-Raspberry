@@ -138,8 +138,7 @@ def valueVolumeChanged(value, direction):
             volume_change -= 1
 
     # Apply volume changes in a separate thread
-    if abs(volume_change) >= 10:
-        threading.Thread(target=applyVolumeChange).start()
+    threading.Thread(target=applyVolumeChange).start()
 
 
 def playButtonPressed(channel):
