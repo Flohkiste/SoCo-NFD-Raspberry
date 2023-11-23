@@ -18,3 +18,6 @@ class MyTimer:
     def time_left(self):
         elapsed_time = time.time() - self.start_time
         return max(0, self.duration - elapsed_time)
+
+    def elapsed_time(self):
+        return time.time() - self.start_time
