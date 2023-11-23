@@ -194,7 +194,13 @@ def updateScan():
     time.sleep(0.001)
     lastScans[1] = lastScans[0]
     time.sleep(0.001)
-    lastScans[0] = scanner.read_no_block()[0]
+    try:
+        lastScans[0] = scanner.read_no_block()[0]
+    except Exception as e:
+        if "AUTH ERROR" in str(e):
+            pass  # Ignore the error
+        else:
+            raise  # Re-raise the error if it's not an "AUTH ERROR"
 
 
 def checkForScan():
