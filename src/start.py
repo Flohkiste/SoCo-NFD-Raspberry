@@ -241,11 +241,12 @@ def checkForScan():
 def playlistFromId(id):
     global currentPlaylist, timer
     if timer != None:
+        if timer <= 10:
+            print("Skip")
+
         timer.cancel()
         print("Timer canceled")
         timer = None
-        if timer <= 10:
-            print("Skip")
 
     if currentPlaylist == iDs.index(id):
         Küche[0].play()
