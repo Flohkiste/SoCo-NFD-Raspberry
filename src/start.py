@@ -246,6 +246,7 @@ def playlistFromId(id):
         timer = None
 
     if timer != None and timer <= 10:
+        print("Skip")
         Küche[0].next()
 
     if currentPlaylist == iDs.index(id):
