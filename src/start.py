@@ -6,6 +6,7 @@ from soco import SoCo
 from soco.plugins.sharelink import *
 import time
 from mfrc522 import SimpleMFRC522
+from MyTimer import MyTimer
 
 
 Wohnzimmer = SoCo("192.168.150.28")
@@ -224,7 +225,7 @@ def checkForScan():
         ):
             print("Stop")
             Küche[0].pause()
-            timer = th.Timer(30.0, resetCurrentPlaylist)
+            timer = MyTimer(30.0, resetCurrentPlaylist)
             timer.start()
             print("Timer Started")
             iplay = False
