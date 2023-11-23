@@ -245,6 +245,7 @@ def playlistFromId(id):
         print(f"Time left: {timer.elapsed_time()}")
         if timer.elapsed_time() <= 10:
             print("Skip")
+            Küche[0].next()
 
         timer.cancel()
         print("Timer canceled")
