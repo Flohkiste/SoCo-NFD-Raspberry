@@ -6,6 +6,7 @@ from soco import SoCo
 from soco.plugins.sharelink import *
 import time
 from mfrc522 import SimpleMFRC522
+from MyTimer import MyTimer
 
 
 Wohnzimmer = SoCo("192.168.150.28")
@@ -193,7 +194,13 @@ def updateScan():
     time.sleep(0.001)
     lastScans[1] = lastScans[0]
     time.sleep(0.001)
-    lastScans[0] = scanner.read_no_block()[0]
+    try:
+        lastScans[0] = scanner.read_no_block()[0]
+    except Exception as e:
+        if "AUTH ERROR" in str(e):
+            pass  # Ignore the error
+        else:
+            raise  # Re-raise the error if it's not an "AUTH ERROR"
 
 
 def checkForScan():
@@ -224,7 +231,7 @@ def checkForScan():
         ):
             print("Stop")
             Küche[0].pause()
-            timer = th.Timer(5.0, resetCurrentPlaylist)
+            timer = MyTimer(30.0, resetCurrentPlaylist)
             timer.start()
             print("Timer Started")
             iplay = False
@@ -241,6 +248,11 @@ def checkForScan():
 def playlistFromId(id):
     global currentPlaylist, timer
     if timer != None:
+        print(f"Time left: {timer.elapsed_time()}")
+        if timer.elapsed_time() <= 10:
+            print("Skip")
+            Küche[0].next()
+
         timer.cancel()
         print("Timer canceled")
         timer = None
