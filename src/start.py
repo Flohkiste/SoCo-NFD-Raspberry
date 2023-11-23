@@ -245,10 +245,11 @@ def playlistFromId(id):
         print("Timer canceled")
         timer = None
 
+    if timer != None and timer <= 10:
+        Küche[0].next()
+
     if currentPlaylist == iDs.index(id):
         Küche[0].play()
-    elif timer != None & timer <= 10:
-        Küche[0].next()
     else:
         Küche[0].clear_queue()
         currentPlaylist = iDs.index(id)
