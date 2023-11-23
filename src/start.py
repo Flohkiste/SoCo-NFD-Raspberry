@@ -242,7 +242,7 @@ def checkForScan():
 def playlistFromId(id):
     global currentPlaylist, timer
     if timer != None:
-        if timer <= 10:
+        if timer.time_left() <= 10:
             print("Skip")
 
         timer.cancel()
