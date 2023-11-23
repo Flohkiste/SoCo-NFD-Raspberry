@@ -247,7 +247,7 @@ def playlistFromId(id):
 
     if currentPlaylist == iDs.index(id):
         Küche[0].play()
-    elif timer <= 10:
+    elif timer != None & timer <= 10:
         Küche[0].next()
     else:
         Küche[0].clear_queue()
