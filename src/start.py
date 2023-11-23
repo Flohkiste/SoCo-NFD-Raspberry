@@ -224,7 +224,7 @@ def checkForScan():
         ):
             print("Stop")
             Küche[0].pause()
-            timer = th.Timer(5.0, resetCurrentPlaylist)
+            timer = th.Timer(30.0, resetCurrentPlaylist)
             timer.start()
             print("Timer Started")
             iplay = False
@@ -247,6 +247,8 @@ def playlistFromId(id):
 
     if currentPlaylist == iDs.index(id):
         Küche[0].play()
+    elif timer <= 10:
+        Küche[0].next()
     else:
         Küche[0].clear_queue()
         currentPlaylist = iDs.index(id)
