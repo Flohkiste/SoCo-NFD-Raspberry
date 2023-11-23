@@ -244,10 +244,8 @@ def playlistFromId(id):
         timer.cancel()
         print("Timer canceled")
         timer = None
-
-    if timer != None and timer <= 10:
-        print("Skip")
-        Küche[0].next()
+        if timer <= 10:
+            print("Skip")
 
     if currentPlaylist == iDs.index(id):
         Küche[0].play()
