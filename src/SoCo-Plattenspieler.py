@@ -134,7 +134,7 @@ def applyVolumeChange():
     with volume_lock:
         change = volume_change
         volume_change = 0
-    Hüche[0].group.set_relative_volume(change)
+    Küche[0].group.set_relative_volume(change)
 
 
 def valueVolumeChanged(value, direction):
