@@ -7,6 +7,7 @@ from soco.plugins.sharelink import *
 import time
 from mfrc522 import SimpleMFRC522
 from MyTimer import MyTimer
+from collections import deque
 
 
 Wohnzimmer = SoCo("192.168.150.28")
@@ -186,63 +187,43 @@ def shuffleButtonPressed(channel):
         Küche[0].play_mode = "SHUFFLE"
 
 
+lastScans = deque([None] * 4, maxlen=4)
+
+
 def updateScan():
     global lastScans
-    lastScans[3] = lastScans[2]
-    time.sleep(0.001)
-    lastScans[2] = lastScans[1]
-    time.sleep(0.001)
-    lastScans[1] = lastScans[0]
-    time.sleep(0.001)
-    try:
-        lastScans[0] = scanner.read_no_block()[0]
-    except Exception as e:
-        if "AUTH ERROR" in str(e):
-            pass  # Ignore the error
-        else:
-            raise  # Re-raise the error if it's not an "AUTH ERROR"
+    lastScans.appendleft(scanner.read_no_block()[0])
 
 
 def checkForScan():
     global iplay, currentPlaylist, timer
-    y = 0
+    updateScan()
+    y = lastScans.count(None)
 
-    try:
-        updateScan()
-        for x in range(len(lastScans)):
-            if lastScans[x] != None:
-                y += 1
-
-        if (y == 2) & (currentPlaylist != lastScans[0]) & (iplay == False):
-            print("play")
-            for x in range(len(lastScans)):
-                if lastScans[x] != None:
-                    playlistFromId(int(lastScans[x]))
-                    break
-            print(currentPlaylist)
-            iplay = True
-        elif (
-            (y < 2)
-            & (iplay == True)
-            & (
-                Küche[0].get_current_transport_info()["current_transport_state"]
-                == "PLAYING"
-            )
-        ):
-            print("Stop")
-            Küche[0].pause()
-            timer = MyTimer(30.0, resetCurrentPlaylist)
-            timer.start()
-            print("Timer Started")
-            iplay = False
-        else:
-            print(" ")
-
-    except Exception as e:
-        if "AUTH ERROR" in str(e):
-            pass  # Ignore the error
-        else:
-            raise  # Re-raise the error if it's not an "AUTH ERROR"
+    if (y == 2) & (currentPlaylist != lastScans[0]) & (iplay == False):
+        print("play")
+        for scan in lastScans:
+            if scan is not None:
+                playlistFromId(int(scan))
+                break
+        print(currentPlaylist)
+        iplay = True
+    elif (
+        (y < 2)
+        & (iplay == True)
+        & (
+            Küche[0].get_current_transport_info()["current_transport_state"]
+            == "PLAYING"
+        )
+    ):
+        print("Stop")
+        Küche[0].pause()
+        timer = MyTimer(30.0, resetCurrentPlaylist)
+        timer.start()
+        print("Timer Started")
+        iplay = False
+    else:
+        print(" ")
 
 
 def playlistFromId(id):
