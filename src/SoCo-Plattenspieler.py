@@ -9,11 +9,11 @@ from mfrc522 import SimpleMFRC522
 from MyTimer import MyTimer
 
 
-Wohnzimmer = SoCo("192.168.150.28")
-Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
+Wohnzimmer = SoCo("172.20.10.7")
+Küche = SoCo("172.20.10.6")
 Playlists = []
 iDs = []
-myShare = ShareLinkPlugin(Küche[0])
+myShare = ShareLinkPlugin(Küche)
 currentPlaylist = -1
 grouped = False
 iplay = False
