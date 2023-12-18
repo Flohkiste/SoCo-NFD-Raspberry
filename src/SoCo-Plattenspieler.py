@@ -54,44 +54,41 @@ def setupPlaylists():
 
 def updateObjects():
     global Wohnzimmer, Küche, volumeEncoder
-    Wohnzimmer = SoCo("192.168.150.28")
-    Küche = [SoCo("192.168.150.30"), SoCo("192.168.150.39")]
+    Wohnzimmer = SoCo("172.20.10.7")
+    Küche = SoCo("172.20.10.6")
 
 
 def joinGroups():
     print("Join Groups")
     updateObjects()
-    Küche[1].join(Küche[0])
 
 
 def joinGroup():
     print("Join Group")
     updateObjects()
     x = False
-    if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
-        Küche[0].pause()
+    if Küche.get_current_transport_info()["current_transport_state"] == "PLAYING":
+        Küche.pause()
         x = True
 
-    Wohnzimmer.join(Küche[0])
-    Küche[1].join(Küche[0])
+    Wohnzimmer.join(Küche)
 
     if x:
         while grouped == False:
             time.sleep(2)
             checkIfGrouped()
 
-        Küche[0].play()
+        Küche.play()
 
 
 def resetGroups():
     print("Reset")
     x = False
-    if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
-        Küche[0].pause()
+    if Küche.get_current_transport_info()["current_transport_state"] == "PLAYING":
+        Küche.pause()
         x = True
 
     Wohnzimmer.unjoin()
-    Küche[1].unjoin()
     joinGroups()
     updateObjects()
 
@@ -106,7 +103,7 @@ def resetGroups():
 def checkIfGrouped():
     global grouped
     updateObjects()
-    group = next(g for g in Küche[0].all_groups if g.coordinator is Küche[0])
+    group = next(g for g in Küche.all_groups if g.coordinator is Küche)
     num_devices = len(group.members)
     if num_devices <= 3:
         grouped = False
@@ -116,8 +113,7 @@ def checkIfGrouped():
 
 def clearQueue():
     global grouped
-    for x in Küche:
-        Küche[x].clear_queue()
+    Küche.clear_queue()
 
     if grouped:
         Wohnzimmer.clear_queue()
@@ -134,7 +130,7 @@ def applyVolumeChange():
     with volume_lock:
         change = volume_change
         volume_change = 0
-    Küche[0].group.set_relative_volume(change)
+    Küche.group.set_relative_volume(change)
 
 
 def valueVolumeChanged(value, direction):
@@ -156,10 +152,10 @@ def valueVolumeChanged(value, direction):
 
 def playButtonPressed(channel):
     updateObjects()
-    if Küche[0].get_current_transport_info()["current_transport_state"] == "PLAYING":
-        Küche[0].stop()
+    if Küche.get_current_transport_info()["current_transport_state"] == "PLAYING":
+        Küche.pause()
     elif (
-        Küche[0].get_current_transport_info()["current_transport_state"]
+        Küche.get_current_transport_info()["current_transport_state"]
         == "PAUSED_PLAYBACK"
     ):
         Küche[0].play()
@@ -180,10 +176,10 @@ def groupingButtonPressed(channel):
 
 
 def shuffleButtonPressed(channel):
-    if Küche[0].shuffle:
-        Küche[0].play_mode = "NORMAL"
+    if Küche.shuffle:
+        Küche.play_mode = "NORMAL"
     else:
-        Küche[0].play_mode = "SHUFFLE"
+        Küche.play_mode = "SHUFFLE"
 
 
 def updateScan():
@@ -225,12 +221,12 @@ def checkForScan():
             (y < 2)
             & (iplay == True)
             & (
-                Küche[0].get_current_transport_info()["current_transport_state"]
+                Küche.get_current_transport_info()["current_transport_state"]
                 == "PLAYING"
             )
         ):
             print("Stop")
-            Küche[0].pause()
+            Küche.pause()
             timer = MyTimer(30.0, resetCurrentPlaylist)
             timer.start()
             print("Timer Started")
@@ -251,19 +247,19 @@ def playlistFromId(id):
         print(f"Time left: {timer.elapsed_time()}")
         if timer.elapsed_time() <= 10:
             print("Skip")
-            Küche[0].next()
+            Küche.next()
 
         timer.cancel()
         print("Timer canceled")
         timer = None
 
     if currentPlaylist == iDs.index(id):
-        Küche[0].play()
+        Küche.play()
     else:
-        Küche[0].clear_queue()
+        Küche.clear_queue()
         currentPlaylist = iDs.index(id)
         ShareLinkPlugin.add_share_link_to_queue(myShare, Playlists[iDs.index(id)])
-        Küche[0].play_from_queue(0)
+        Küche.play_from_queue(0)
 
 
 GPIO.setmode(GPIO.BCM)
@@ -281,14 +277,15 @@ GPIO.add_event_detect(
     groupingButtonPin, GPIO.FALLING, callback=groupingButtonPressed, bouncetime=5000
 )
 GPIO.add_event_detect(
-    shuffleButtonPin, GPIO.FALLING, callback=shuffleButtonPressed, bouncetime=1000
+    shuffleButtonPin, GPIO.FALLING, callback=playButtonPressed, bouncetime=1000
 )
 
 
 resetGroups()
 setupPlaylists()
-Küche[0].volume = 10
-print("Volume: {}".format(Küche[0].volume))
+Küche.volume = 10
+print("Volume: {}".format(Küche.volume))
+Küche.play_mode = "SHUFFLE"
 
 try:
     while True:
