@@ -242,7 +242,8 @@ def checkForScan():
 
 
 def playlistFromId(id):
-    global currentPlaylist, timer
+    global currentPlaylist, timer, Küche
+    Küche.play_mode = "SHUFFLE"
     if timer != None:
         print(f"Time left: {timer.elapsed_time()}")
         if timer.elapsed_time() <= 10:
